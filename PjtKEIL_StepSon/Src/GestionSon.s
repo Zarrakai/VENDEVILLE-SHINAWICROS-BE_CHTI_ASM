@@ -6,6 +6,8 @@
 	export CallbackSon
 	export decalageSon
 	export SortieSon
+		
+	include Driver/DriverJeuLaser.inc
 ; ====================== zone de réservation de données,  ======================================
 ;Section RAM (read only) :
 	area    mesdata,data,readonly
@@ -28,7 +30,7 @@ decalageSon dcd 0
 
 
 CallbackSon proc
-		push {lr, r3, r4, r5, r6}
+		push {r3, r4, r5, r6, lr}
 		
 		ldr r1, =Son
 		ldr r2, =decalageSon
@@ -37,11 +39,8 @@ CallbackSon proc
 		ldr r5, [r4]
 		lsl r5, r5, #1
 		ldr R6, =SortieSon
-		
-		; ldr R4, =FlagCligno
-		; ldr R3, [R4]
-		; cmp R3, #0
-		
+
+
 		; si on est à la première itération...
 		cmp r3, #0
 		bne pasZero
@@ -52,7 +51,8 @@ CallbackSon proc
 		mul r0, r0, r1
 		asr r0, #16
 		str r0, [r6]
-		
+		bl PWM_Set_Value_TIM3_Ch3
+
 		add r3, #2
 		str r3, [r2]
 		
@@ -74,7 +74,8 @@ pasZero
 		mul r0, r0, r1
 		asr r0, #16
 		str r0, [r6]
-		
+		bl PWM_Set_Value_TIM3_Ch3
+
 		add r3, #2
 		str r3, [r2]
 				
@@ -83,8 +84,7 @@ pasZero
 
 		
 endcallback
-		pop {r6, r5, r4, r3, lr}
-		;jouer le son contenu dans r0
+		pop {r3, r4, r5, r6, lr}
 		bx lr
 		endp
 		

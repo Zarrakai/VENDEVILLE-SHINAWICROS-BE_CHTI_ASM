@@ -408,6 +408,11 @@
               <FileType>4</FileType>
               <FilePath>.\Driver\DriverJeuLaser.lib</FilePath>
             </File>
+            <File>
+              <FileName>DriverJeuLaser.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Driver\DriverJeuLaser.inc</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -434,7 +439,7 @@
       <TargetName>CibleSondeKEIL</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -831,6 +836,11 @@
               <FileName>DriverJeuLaser.lib</FileName>
               <FileType>4</FileType>
               <FilePath>.\Driver\DriverJeuLaser.lib</FilePath>
+            </File>
+            <File>
+              <FileName>DriverJeuLaser.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Driver\DriverJeuLaser.inc</FilePath>
             </File>
           </Files>
         </Group>
@@ -1324,6 +1334,11 @@
               <FileName>DriverJeuLaser.lib</FileName>
               <FileType>4</FileType>
               <FilePath>.\Driver\DriverJeuLaser.lib</FilePath>
+            </File>
+            <File>
+              <FileName>DriverJeuLaser.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Driver\DriverJeuLaser.inc</FilePath>
             </File>
           </Files>
         </Group>
