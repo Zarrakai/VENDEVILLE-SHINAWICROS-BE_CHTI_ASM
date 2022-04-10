@@ -114,69 +114,48 @@ ARM Macro Assembler    Page 2
                                proc
    33 00000000 B578            push             {r3, r4, r5, r6, lr}
    34 00000002         
-   35 00000002 4918            ldr              r1, =Son
-   36 00000004 4A18            ldr              r2, =decalageSon
+   35 00000002 490F            ldr              r1, =Son
+   36 00000004 4A0F            ldr              r2, =decalageSon
    37 00000006 6813            ldr              r3, [r2]
-   38 00000008 4C18            ldr              r4, =LongueurSon
+   38 00000008 4C0F            ldr              r4, =LongueurSon
    39 0000000A 6825            ldr              r5, [r4]
    40 0000000C EA4F 0545       lsl              r5, r5, #1
-   41 00000010 4E17            ldr              R6, =SortieSon
+   41 00000010 4E0E            ldr              R6, =SortieSon
    42 00000012         
    43 00000012         
-   44 00000012         ; si on est à la première itération...
-   45 00000012 2B00            cmp              r3, #0
-   46 00000014 D110            bne              pasZero
+   44 00000012         ; si on est à la fin...
+   45 00000012 42AB            cmp              r3, r5
+   46 00000014 DA10            bge              endcallback
    47 00000016         
-   48 00000016 F9B1 0000       ldrsh            r0, [r1]
+   48 00000016         
 
 
 
 ARM Macro Assembler    Page 3 
 
 
-   49 0000001A F44F 7134       mov              r1, #720
-   50 0000001E F500 4000       add              r0, #32768
-   51 00000022 FB00 F001       mul              r0, r0, r1
-   52 00000026 EA4F 4020       asr              r0, #16
-   53 0000002A 6030            str              r0, [r6]
-   54 0000002C F7FF FFFE       bl               PWM_Set_Value_TIM3_Ch3
-   55 00000030         
-   56 00000030 F103 0302       add              r3, #2
-   57 00000034 6013            str              r3, [r2]
-   58 00000036         
+   49 00000016 F931 0013       ldrsh            r0, [r1, r3, lsl #1]
+   50 0000001A F44F 7134       mov              r1, #720
+   51 0000001E F500 4000       add              r0, #32768
+   52 00000022 FB00 F001       mul              r0, r0, r1
+   53 00000026 EA4F 4020       asr              r0, #16
+   54 0000002A 6030            str              r0, [r6]
+   55 0000002C F7FF FFFE       bl               PWM_Set_Value_TIM3_Ch3
+   56 00000030         
+   57 00000030 F103 0301       add              r3, #1
+   58 00000034 6013            str              r3, [r2]
    59 00000036         
-   60 00000036 E011            b                endcallback
-   61 00000038         
+   60 00000036         
+   61 00000036 E7FF            b                endcallback
    62 00000038         
-   63 00000038         pasZero
-   64 00000038         ;si le son a fini d'etre lu, on sort
-   65 00000038 42AB            cmp              r3, r5
-   66 0000003A DA0F            bge              endcallback
-   67 0000003C         
-   68 0000003C         ;r0 contient l'échantillon
-   69 0000003C         ;r1 est l'adresse du son
-   70 0000003C         ;r2 est le décalage de l'adresse du son
-   71 0000003C 5EC8            ldrsh            r0, [r1, r3]
-   72 0000003E F44F 7134       mov              r1, #720
-   73 00000042 F500 4000       add              r0, #32768
-   74 00000046 FB00 F001       mul              r0, r0, r1
-   75 0000004A EA4F 4020       asr              r0, #16
-   76 0000004E 6030            str              r0, [r6]
-   77 00000050 F7FF FFFE       bl               PWM_Set_Value_TIM3_Ch3
-   78 00000054         
-   79 00000054 F103 0302       add              r3, #2
-   80 00000058 6013            str              r3, [r2]
-   81 0000005A         
-   82 0000005A E7FF            b                endcallback
-   83 0000005C         
-   84 0000005C         
-   85 0000005C         
-   86 0000005C         endcallback
-   87 0000005C E8BD 4078       pop              {r3, r4, r5, r6, lr}
-   88 00000060 4770            bx               lr
-   89 00000062                 endp
-   90 00000062         
-   91 00000062                 END
+   63 00000038         
+   64 00000038         
+   65 00000038         endcallback
+   66 00000038 E8BD 4078       pop              {r3, r4, r5, r6, lr}
+   67 0000003C 4770            bx               lr
+   68 0000003E                 endp
+   69 0000003E         
+   70 0000003E                 END
               00 00 00000000 
               00000000 
               00000000 
@@ -250,15 +229,14 @@ Symbol: CallbackSon
    Uses
       At line 6 in file Src\GestionSon.s
 Comment: CallbackSon used once
-endcallback 0000005C
+endcallback 00000038
 
 Symbol: endcallback
    Definitions
-      At line 86 in file Src\GestionSon.s
+      At line 65 in file Src\GestionSon.s
    Uses
-      At line 60 in file Src\GestionSon.s
-      At line 66 in file Src\GestionSon.s
-      At line 82 in file Src\GestionSon.s
+      At line 46 in file Src\GestionSon.s
+      At line 61 in file Src\GestionSon.s
 
 moncode 00000000
 
@@ -268,15 +246,7 @@ Symbol: moncode
    Uses
       None
 Comment: moncode unused
-pasZero 00000038
-
-Symbol: pasZero
-   Definitions
-      At line 63 in file Src\GestionSon.s
-   Uses
-      At line 46 in file Src\GestionSon.s
-Comment: pasZero used once
-4 symbols
+3 symbols
 
 
 
@@ -351,9 +321,8 @@ External symbols
    Definitions
       At line 18 in file Driver\DriverJeuLaser.inc
    Uses
-      At line 54 in file Src\GestionSon.s
-      At line 77 in file Src\GestionSon.s
-
+      At line 55 in file Src\GestionSon.s
+Comment: PWM_Set_Value_TIM3_Ch3 used once
 Son 00000000
 
 Symbol: Son
@@ -363,4 +332,4 @@ Symbol: Son
       At line 35 in file Src\GestionSon.s
 Comment: Son used once
 9 symbols
-354 symbols in table
+353 symbols in table

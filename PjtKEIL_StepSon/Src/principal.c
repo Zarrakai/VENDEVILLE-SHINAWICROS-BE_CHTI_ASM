@@ -20,7 +20,7 @@ int main(void)
 	//============================================================================	
 	PWM_Init_ff(TIM3, 3, 720);
 	GPIO_Configure(GPIOB, 0, OUTPUT, ALT_PPULL);
-	Timer_1234_Init_ff(TIM4, PeriodeSonMicroSec);
+	Timer_1234_Init_ff(TIM4, 6554);
 	Active_IT_Debordement_Timer(TIM4, 2, CallbackSon);
 
  	while	(1)

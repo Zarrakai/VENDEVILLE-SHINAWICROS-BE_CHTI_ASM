@@ -41,34 +41,12 @@ CallbackSon proc
 		ldr R6, =SortieSon
 
 
-		; si on est à la première itération...
-		cmp r3, #0
-		bne pasZero
-		
-		ldrsh r0, [r1]
-		mov r1, #720
-		add r0, #32768
-		mul r0, r0, r1
-		asr r0, #16
-		str r0, [r6]
-		bl PWM_Set_Value_TIM3_Ch3
-
-		add r3, #2
-		str r3, [r2]
-		
-		
-		b endcallback
-		
-		
-pasZero
-		;si le son a fini d'etre lu, on sort
+		; si on est à la fin...
 		cmp r3, r5
 		bge endcallback
 		
-		;r0 contient l'échantillon
-		;r1 est l'adresse du son
-		;r2 est le décalage de l'adresse du son
-		ldrsh r0, [r1, r3]
+		
+		ldrsh r0, [r1, r3, lsl #1]
 		mov r1, #720
 		add r0, #32768
 		mul r0, r0, r1
@@ -76,9 +54,10 @@ pasZero
 		str r0, [r6]
 		bl PWM_Set_Value_TIM3_Ch3
 
-		add r3, #2
+		add r3, #1
 		str r3, [r2]
-				
+		
+		
 		b endcallback
 
 
