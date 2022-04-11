@@ -37,7 +37,6 @@ CallbackSon proc
 		ldr r3, [r2]
 		ldr r4, =LongueurSon
 		ldr r5, [r4]
-		lsl r5, r5, #1
 		ldr R6, =SortieSon
 
 
@@ -52,14 +51,11 @@ CallbackSon proc
 		mul r0, r0, r1
 		asr r0, #16
 		str r0, [r6]
-		bl PWM_Set_Value_TIM3_Ch3
-
+		
 		add r3, #1
 		str r3, [r2]
 		
-		
-		b endcallback
-
+		bl PWM_Set_Value_TIM3_Ch3
 
 		
 endcallback

@@ -114,59 +114,55 @@ ARM Macro Assembler    Page 2
                                proc
    33 00000000 B578            push             {r3, r4, r5, r6, lr}
    34 00000002         
-   35 00000002 490F            ldr              r1, =Son
-   36 00000004 4A0F            ldr              r2, =decalageSon
+   35 00000002 490D            ldr              r1, =Son
+   36 00000004 4A0D            ldr              r2, =decalageSon
    37 00000006 6813            ldr              r3, [r2]
-   38 00000008 4C0F            ldr              r4, =LongueurSon
+   38 00000008 4C0D            ldr              r4, =LongueurSon
    39 0000000A 6825            ldr              r5, [r4]
-   40 0000000C EA4F 0545       lsl              r5, r5, #1
-   41 00000010 4E0E            ldr              R6, =SortieSon
-   42 00000012         
-   43 00000012         
-   44 00000012         ; si on est à la fin...
-   45 00000012 42AB            cmp              r3, r5
-   46 00000014 DA10            bge              endcallback
-   47 00000016         
-   48 00000016         
+   40 0000000C 4E0D            ldr              R6, =SortieSon
+   41 0000000E         
+   42 0000000E         
+   43 0000000E         ; si on est à la fin...
+   44 0000000E 42AB            cmp              r3, r5
+   45 00000010 DA0F            bge              endcallback
+   46 00000012         
+   47 00000012         
+   48 00000012 F931 0013       ldrsh            r0, [r1, r3, lsl #1]
 
 
 
 ARM Macro Assembler    Page 3 
 
 
-   49 00000016 F931 0013       ldrsh            r0, [r1, r3, lsl #1]
-   50 0000001A F44F 7134       mov              r1, #720
-   51 0000001E F500 4000       add              r0, #32768
-   52 00000022 FB00 F001       mul              r0, r0, r1
-   53 00000026 EA4F 4020       asr              r0, #16
-   54 0000002A 6030            str              r0, [r6]
-   55 0000002C F7FF FFFE       bl               PWM_Set_Value_TIM3_Ch3
-   56 00000030         
-   57 00000030 F103 0301       add              r3, #1
-   58 00000034 6013            str              r3, [r2]
-   59 00000036         
-   60 00000036         
-   61 00000036 E7FF            b                endcallback
-   62 00000038         
-   63 00000038         
-   64 00000038         
-   65 00000038         endcallback
-   66 00000038 E8BD 4078       pop              {r3, r4, r5, r6, lr}
-   67 0000003C 4770            bx               lr
-   68 0000003E                 endp
-   69 0000003E         
-   70 0000003E                 END
-              00 00 00000000 
+   49 00000016 F44F 7134       mov              r1, #720
+   50 0000001A F500 4000       add              r0, #32768
+   51 0000001E FB00 F001       mul              r0, r0, r1
+   52 00000022 EA4F 4020       asr              r0, #16
+   53 00000026 6030            str              r0, [r6]
+   54 00000028         
+   55 00000028 F103 0301       add              r3, #1
+   56 0000002C 6013            str              r3, [r2]
+   57 0000002E         
+   58 0000002E F7FF FFFE       bl               PWM_Set_Value_TIM3_Ch3
+   59 00000032         
+   60 00000032         
+   61 00000032         endcallback
+   62 00000032 E8BD 4078       pop              {r3, r4, r5, r6, lr}
+   63 00000036 4770            bx               lr
+   64 00000038                 endp
+   65 00000038         
+   66 00000038                 END
+              00000000 
               00000000 
               00000000 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
-ork --depend=.\obj\gestionson.d -o.\obj\gestionson.o -I.\RTE\_Simu -IC:\Program
-data\Keil\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include -IC:\Programdata\Keil\Ar
-m\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__EVAL SETA 1" --p
-redefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 534" --predefi
-ne="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --predefine="_RTE_ SETA 1" 
---list=gestionson.lst Src\GestionSon.s
+ork --depend=.\obj\gestionson.d -o.\obj\gestionson.o -I.\RTE\_CibleSondeKEIL -I
+C:\Programdata\Keil\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include -IC:\Programda
+ta\Keil\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__EVAL S
+ETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 534"
+ --predefine="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --predefine="_RTE
+_ SETA 1" --list=gestionson.lst Src\GestionSon.s
 
 
 
@@ -195,7 +191,7 @@ Symbol: SortieSon
       At line 19 in file Src\GestionSon.s
    Uses
       At line 8 in file Src\GestionSon.s
-      At line 41 in file Src\GestionSon.s
+      At line 40 in file Src\GestionSon.s
 
 decalageSon 00000004
 
@@ -229,15 +225,14 @@ Symbol: CallbackSon
    Uses
       At line 6 in file Src\GestionSon.s
 Comment: CallbackSon used once
-endcallback 00000038
+endcallback 00000032
 
 Symbol: endcallback
    Definitions
-      At line 65 in file Src\GestionSon.s
-   Uses
-      At line 46 in file Src\GestionSon.s
       At line 61 in file Src\GestionSon.s
-
+   Uses
+      At line 45 in file Src\GestionSon.s
+Comment: endcallback used once
 moncode 00000000
 
 Symbol: moncode
@@ -321,7 +316,7 @@ External symbols
    Definitions
       At line 18 in file Driver\DriverJeuLaser.inc
    Uses
-      At line 55 in file Src\GestionSon.s
+      At line 58 in file Src\GestionSon.s
 Comment: PWM_Set_Value_TIM3_Ch3 used once
 Son 00000000
 
