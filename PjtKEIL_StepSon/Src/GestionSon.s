@@ -26,7 +26,16 @@ decalageSon dcd 0
 		
 ;Section ROM code (read only) :		
 	area    moncode,code,readonly
-; écrire le code ici		
+; écrire le code ici	
+
+
+StartSon proc		
+		ldr r0, =decalageSon
+		mov r1, #0
+		str r1, [r0]
+		
+		endp
+	
 
 
 CallbackSon proc
