@@ -1,7 +1,11 @@
 
 
 #include "DriverJeuLaser.h"
+#include "DFT.h"
 
+extern short TabCos[64];
+extern short TabSin[64];
+extern short LeSignal[64];
 
 
 int main(void)
@@ -15,7 +19,7 @@ int main(void)
 CLOCK_Configure();
 
 
-	
+	int res = DFT_ModuleAuCarre(TabSin,1);
 	
 
 //============================================================================	

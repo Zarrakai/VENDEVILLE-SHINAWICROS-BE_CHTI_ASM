@@ -2,6 +2,11 @@
 	THUMB   
 		
 
+	export TabCos
+	export TabSin
+	export DFT_ModuleAuCarre
+
+
 ; ====================== zone de réservation de données,  ======================================
 ;Section RAM (read only) :
 	area    mesdata,data,readonly
@@ -25,29 +30,61 @@
 DFT_ModuleAuCarre proc
 	; r0 = signal
 	; r1 = k
-	push {lr}
+	; r0, r1 = resultat 64 bits
+	push {lr,r4,r5,r6,r7}
+	
+	mov r7, r1 ; on met k dans r7
 	
 	ldr r2, =TabCos
-	bl DFT_Cos
+	bl DFT_Cos_sin
+	mov r3, r1 ;resultat de cos
 	
-	ldr r2, TabSin
-	bl DFT_Sin
+	ldr r2, =TabSin
+	bl DFT_Cos_sin	;r1 : résultat de sin
 	
-	mul r0, r2, r2
-	mul r1, r3, r3
-	add r0, r0, r1
+	smull r0, r4, r3, r3	;cos²
+	smlal r0, r4, r1, r1	;sin² + add avec le cos²
+	mov r1, r4
 	
-	pop {lr}
+	pop {lr,r4,r5,r6,r7}
 	bx lr
 	endp
 	
-DFT_Cos
+DFT_Cos_sin
+	;calcule la partie réelle ou imaginaire de la dft
+	; r0 = signal
+	; r2 = la table à utiliser
+	; resultat de r1
 	
+	mov r1, #0
+	mov r4, #0 ;compteur n
+	mov r8, #0 ; p = n*k
 
-DFT_Sin
+Loop
+	; calcul de p
+	mul r8, r7, r4
+	and r8, r8, #64
 	
 	
-
+	; r5 <= r0[n]
+	ldrsh r5, [r0, r4, lsl #1]
+	
+	; r6 <= r2[p]
+	ldrsh r6, [r2, r8, lsl #1]
+	
+	; r5 <= r0[n] * r2[p] => X(n) * cos(p)
+	mul r5, r5, r6
+	
+	; r1 += r5
+	add r1, r5
+	
+	add r4, #1
+	
+	; tant que n < 64
+	cmp r4, #64
+	blt Loop
+	
+	bx lr
 		
 
 
@@ -120,7 +157,7 @@ TabCos
 	DCW	31357	; 61 0x7a7d  0.95694
 	DCW	32138	; 62 0x7d8a  0.98077
 	DCW	32610	; 63 0x7f62  0.99518
-TabSin 
+TabSin
 	DCW	    0	;  0 0x0000  0.00000
 	DCW	 3212	;  1 0x0c8c  0.09802
 	DCW	 6393	;  2 0x18f9  0.19510
