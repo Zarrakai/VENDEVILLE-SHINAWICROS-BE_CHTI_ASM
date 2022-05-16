@@ -30,11 +30,13 @@ Build target 'Simu'
 compiling principal.c...
 Src\DFT.h(7): warning:  #1-D: last line of file ends without a newline
   #endif
-Src\principal.c: 1 warning, 0 errors
+Src\principal.c(21): warning:  #550-D: variable "tabDFT"  was set but never used
+  	int tabDFT[64] = {0};
+Src\principal.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=508 RO-data=508 RW-data=0 ZI-data=1024  
+Program Size: Code=568 RO-data=636 RW-data=0 ZI-data=1024  
 FromELF: creating hex file...
-".\Obj\StepDFT.axf" - 0 Error(s), 1 Warning(s).
+".\Obj\StepDFT.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -57,7 +59,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

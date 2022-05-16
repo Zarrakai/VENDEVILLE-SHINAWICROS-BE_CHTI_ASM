@@ -18,8 +18,11 @@ int main(void)
 // Après exécution : le coeur CPU est clocké à 72MHz ainsi que tous les timers
 CLOCK_Configure();
 
-
-	int res = DFT_ModuleAuCarre(TabSin,1);
+	int tabDFT[64] = {0};
+	for (int k=0; k<63; k++)
+		tabDFT[k] = DFT_ModuleAuCarre(LeSignal ,k);
+	
+	
 	
 
 //============================================================================	

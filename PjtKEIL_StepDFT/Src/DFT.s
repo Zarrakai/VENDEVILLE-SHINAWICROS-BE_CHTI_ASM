@@ -42,15 +42,15 @@ DFT_ModuleAuCarre proc
 	ldr r2, =TabSin
 	bl DFT_Cos_sin	;r1 : résultat de sin
 	
-	smull r0, r4, r3, r3	;cos²
-	smlal r0, r4, r1, r1	;sin² + add avec le cos²
-	mov r1, r4
+	smull r4, r0, r3, r3	;cos²
+	smlal r4, r0, r1, r1	;sin² + add avec le cos²
+	; on met dans r4 puis r0 car r0 est le msb et r4 le lsb
 	
 	pop {lr,r4,r5,r6,r7}
 	bx lr
 	endp
 	
-DFT_Cos_sin
+DFT_Cos_sin proc
 	;calcule la partie réelle ou imaginaire de la dft
 	; r0 = signal
 	; r2 = la table à utiliser
@@ -59,11 +59,13 @@ DFT_Cos_sin
 	mov r1, #0
 	mov r4, #0 ;compteur n
 	mov r8, #0 ; p = n*k
+	
+	
 
 Loop
 	; calcul de p
 	mul r8, r7, r4
-	and r8, r8, #64
+	and r8, r8, #63
 	
 	
 	; r5 <= r0[n]
@@ -85,7 +87,7 @@ Loop
 	blt Loop
 	
 	bx lr
-		
+	endp
 
 
 ;Section ROM code (read only) :		
