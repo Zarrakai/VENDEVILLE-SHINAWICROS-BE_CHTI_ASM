@@ -5,6 +5,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+extern int PeriodeSonMicroSec;
+extern void CallbackSon(void);
+extern void StartSon(void);
+
+extern int decalageSon;
+extern int LongueurSon;
+
+
 extern short TabCos[64];
 extern short TabSin[64];
 extern short LeSignal[64];
@@ -21,8 +29,9 @@ int main(void)
 
 // Après exécution : le coeur CPU est clocké à 72MHz ainsi que tous les timers
 	CLOCK_Configure();
+	
 	Systick_Period_ff(360000);	//72µs * 5ms * 1000
-	Systick_Prio_IT(0, callback_systick);
+	Systick_Prio_IT(4, callback_systick);
 	SysTick_On;
 	SysTick_Enable_IT;
 	
@@ -32,10 +41,14 @@ int main(void)
 	Init_ADC1_DMA1( 0, dma_buf );
 	
 	
-	
+	PWM_Init_ff(TIM3, 3, 720);
+	GPIO_Configure(GPIOB, 0, OUTPUT, ALT_PPULL);
+	Timer_1234_Init_ff(TIM4, 6554);
+	Active_IT_Debordement_Timer(TIM4, 2, CallbackSon);
 
 //============================================================================	
 	
+	StartSon();
 	
 while	(1)
 	{
@@ -49,6 +62,11 @@ void callback_systick(){
 	
 	for (int k=0; k<63; k++)
 		tabDFT[k] = DFT_ModuleAuCarre(dma_buf ,k);
+	
+	if(tabDFT[24] > 0xFFFFF && decalageSon >= LongueurSon)
+	{
+		StartSon();
+	}
 	
 	int i = 0;
 }

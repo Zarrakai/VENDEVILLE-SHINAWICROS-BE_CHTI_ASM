@@ -31,7 +31,7 @@ DFT_ModuleAuCarre proc
 	; r0 = signal
 	; r1 = k
 	; r0, r1 = resultat 64 bits
-	push {lr,r4,r5,r6,r7}
+	push {lr,r4-r8}
 	
 	mov r7, r1 ; on met k dans r7
 	
@@ -46,7 +46,7 @@ DFT_ModuleAuCarre proc
 	smlal r4, r0, r1, r1	;sin² + add avec le cos²
 	; on met dans r4 puis r0 car r0 est le msb et r4 le lsb
 	
-	pop {lr,r4,r5,r6,r7}
+	pop {lr,r4-r8}
 	bx lr
 	endp
 	
@@ -55,7 +55,7 @@ DFT_Cos_sin proc
 	; r0 = signal
 	; r2 = la table à utiliser
 	; resultat de r1
-	
+	push {lr,r4-r8}
 	mov r1, #0
 	mov r4, #0 ;compteur n
 	mov r8, #0 ; p = n*k
@@ -86,6 +86,7 @@ Loop
 	cmp r4, #64
 	blt Loop
 	
+	pop {lr,r4-r8}
 	bx lr
 	endp
 

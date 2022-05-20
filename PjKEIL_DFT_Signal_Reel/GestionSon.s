@@ -40,7 +40,7 @@ StartSon proc
 
 
 CallbackSon proc
-		push {r3, r4, r5, r6, lr}
+		push {lr, r4-r6}
 		
 		ldr r1, =Son
 		ldr r2, =decalageSon
@@ -69,7 +69,7 @@ CallbackSon proc
 
 		
 endcallback
-		pop {r3, r4, r5, r6, lr}
+		pop {lr, r4-r6}
 		bx lr
 		endp
 		
