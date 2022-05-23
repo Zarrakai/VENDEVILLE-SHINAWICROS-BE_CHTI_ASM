@@ -81,7 +81,7 @@ void callback_systick(){
 			StartSon();
 			scoreJoueurs[i] ++;
 		}
-		int i = 0;
+		//int z = 0;
 	}
 	
 }
