@@ -11,3 +11,4 @@
 .\obj\principal.o: Src\DFT.h
 .\obj\principal.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\obj\principal.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\obj\principal.o: Src\../GestionSon.h

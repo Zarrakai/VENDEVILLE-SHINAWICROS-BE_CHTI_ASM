@@ -30,21 +30,25 @@ Build target 'CibleSondeKEIL'
 compiling principal.c...
 Src\DFT.h(7): warning:  #1-D: last line of file ends without a newline
   #endif
-Src\principal.c(25): warning:  #1295-D: Deprecated declaration callback_systick - give arg types
-  void callback_systick();
-Src\principal.c(33): warning:  #1295-D: Deprecated declaration init_systick - give arg types
+Src\../GestionSon.h(4): warning:  #1295-D: Deprecated declaration StartSon - give arg types
+  void StartSon();
+Src\../GestionSon.h(5): warning:  #1295-D: Deprecated declaration CallbackSon - give arg types
+  void CallbackSon();
+Src\../GestionSon.h(7): warning:  #1-D: last line of file ends without a newline
+  #endif
+Src\principal.c(14): warning:  #1295-D: Deprecated declaration init_systick - give arg types
   void init_systick();
-Src\principal.c(34): warning:  #1295-D: Deprecated declaration init_ADC - give arg types
+Src\principal.c(15): warning:  #1295-D: Deprecated declaration init_ADC - give arg types
   void init_ADC();
-Src\principal.c(35): warning:  #1295-D: Deprecated declaration init_pwm - give arg types
+Src\principal.c(16): warning:  #1295-D: Deprecated declaration init_pwm - give arg types
   void init_pwm();
-Src\principal.c(73): warning:  #177-D: variable "i"  was declared but never referenced
-  		int i = 0;
-Src\principal.c: 6 warnings, 0 errors
+Src\principal.c(17): warning:  #1295-D: Deprecated declaration callback_systick - give arg types
+  void callback_systick();
+Src\principal.c: 8 warnings, 0 errors
 linking...
-Program Size: Code=3584 RO-data=11556 RW-data=200 ZI-data=1456  
+Program Size: Code=3580 RO-data=11556 RW-data=200 ZI-data=1456  
 FromELF: creating hex file...
-".\Obj\StepDFT.axf" - 0 Error(s), 6 Warning(s).
+".\Obj\StepDFT.axf" - 0 Error(s), 8 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -67,7 +71,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
